@@ -28,7 +28,6 @@ def check_winner(score_1, score_2, card_1, card_2):
 
 def dealer_turn(dealer_first_card, total_cards, opponent_score):
 
-
     """Processes the dealer's turn according
      to standard Blackjack rules."""
     dealer_card = [dealer_first_card]
@@ -37,13 +36,21 @@ def dealer_turn(dealer_first_card, total_cards, opponent_score):
         card_reveal = random.choice(total_cards)
         dealer_card.append(card_reveal)
         opponent_score += sum(dealer_card)
-        if opponent_score != 21 and user_score == 21:
+
+        # Changing Ace value from 11 to 1
+        if 11 in dealer_card and opponent_score > 21:
+            old_score = 11
+            new_score = 1
+            dealer_card = [new_score if item == old_score else item for item in dealer_card]
+            opponent_score = sum(dealer_card)
+
+        if opponent_score != 21 and user_first_score == 21:
             print(f"Computer's Final Hand:{dealer_card}, final score: {opponent_score}")
             print("Win with a Blackjack!!😎")
             break
         if opponent_score == 21:
             if opponent_score == user_first_score:
-                print("Both are getting BlackJack!!😎")
+                print("😎Both are getting BlackJack!!")
                 print("Draw🙃")
                 break
             print()
@@ -51,12 +58,20 @@ def dealer_turn(dealer_first_card, total_cards, opponent_score):
             print("You Lose😤")
             break
         elif opponent_score > 17 or opponent_score == 17:
-            check_winner(score_1=user_score, score_2= opponent_score, card_1=user_card, card_2=dealer_card)
+            check_winner(score_1 = user_score, score_2 = opponent_score, card_1 = user_card, card_2 = dealer_card)
             break
         while True:
             card_reveal = random.choice(total_cards)
             dealer_card.append(card_reveal)
             opponent_score = sum(dealer_card)
+
+            # Changing Ace value from 11 to 1
+            if 11 in dealer_card and opponent_score > 21:
+                old_score = 11
+                new_score = 1
+                dealer_card = [new_score if item == old_score else item for item in dealer_card]
+                opponent_score = sum(dealer_card)
+
             if opponent_score > 21:
                 print(f"Your Final Hand:{user_card}, final score: {user_score}")
                 print(f"Computer's Final Hand:{dealer_card}, final score: {opponent_score}")
@@ -85,6 +100,14 @@ while True:
         print(logo)
         print(f"Your's Cards:{user_card}, current score:", user_first_score)
         print(f"Computer's first card: {dealer}")
+
+        # Changing Ace value from 11 to 1
+        if 11 in user_card and user_score > 21:
+            old_value = 11
+            new_value = 1
+            user_card = [new_value if item == old_value else item for item in user_card]
+            user_score = sum(user_card)
+
         if user_first_score == 21:
             print(f"Your Final Hand:{user_card}, final score: {user_first_score}")
             user_score = user_first_score
@@ -94,9 +117,18 @@ while True:
         while True:
             ask_hint_or_stand = input("Type 'y' to get another card, type 'n' to pass:").lower()
             new_card = random.choice(cards)
+
             if ask_hint_or_stand == "y":
                 user_card.append(new_card)
                 user_score += new_card
+
+                # Changing Ace value from 11 to 1
+                if 11 in user_card and user_score > 21:
+                    old_value = 11
+                    new_value = 1
+                    user_card = [new_value if item == old_value else item for item in user_card]
+                    user_score = sum(user_card)
+
                 print(f"Your's Cards:{user_card}, current score:{user_score}")
                 if user_score > 21:
                     print(f"Your Final Hand:{user_card}, final score: {user_score}")
