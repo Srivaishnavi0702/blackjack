@@ -1,12 +1,12 @@
+# Importing logo
 from art import logo
 import random
 
+# Collection of Cards
 cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
-dealer_score = 0
 
 
-#checking winner
-
+# Decide the Winner 
 def check_winner(score_1, score_2, card_1, card_2):
 
     """Checks the final scores of the player and
@@ -24,8 +24,7 @@ def check_winner(score_1, score_2, card_1, card_2):
         print(f"Computer's Final Hand:{card_2}, final score: {score_2}")
         print("You Lose😤")
 
-# Dealer round
-
+# Dealer-round
 def dealer_turn(dealer_first_card, total_cards, opponent_score):
 
     """Processes the dealer's turn according
@@ -87,7 +86,7 @@ def dealer_turn(dealer_first_card, total_cards, opponent_score):
                 break
         break
 
-
+# User-round
 while True:
     user_card = random.sample(cards, k=2)
     user_first_score = user_card[0] + user_card[1]
@@ -148,6 +147,3 @@ while True:
         continue
     else:
         break
-
-
-
